@@ -1,0 +1,3 @@
+IMAGE_SIZE = [224, 224, 3]
+EPOCHS = 2
+N_CLASS = 2

@@ -35,3 +35,5 @@ git remote add origin https://github.com/rauthbibek/CNN_DVC.git
 dvc init
 git push -u origin main
 ```
+
+![Code structure](image/CNN_DVC.png)
