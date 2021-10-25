@@ -1,6 +1,6 @@
 from os import read
 from src.utils.all_utils import read_yaml, create_dirs
-from src.utils.models import get_VGG16_model, prepare_model
+from src.utils.callbacks import create_and_save_tb_callback,create_and_save_ckpt_callback 
 import argparse
 import pandas as pd
 import os
@@ -14,7 +14,23 @@ os.makedirs(log_dir, exist_ok=True)
 logging.basicConfig(filename=os.path.join(log_dir,"running_logs.log"), level=logging.INFO, format=logging_str, filemode="a")
 
 def prepare_callbacks(config_path, param_path):
-    pass
+    config = read_yaml(config_path)
+    params = read_yaml(param_path)
+
+    artifacts = config['artifacts']
+    artifacts_dir = artifacts['ARTIFACTS_DIR']
+
+    tb_log_dir = os.path.join(artifacts_dir, artifacts['TENSORBOARD_ROOT_LOG_DIR'])
+    ckpt_dir = os.path.join(artifacts_dir, artifacts['CHECKPOINT_DIR'])
+    callback_dir = os.path.join(artifacts_dir, artifacts['CALLBACKS_DIR'])
+
+    create_dirs([tb_log_dir,
+    ckpt_dir,callback_dir])
+
+    create_and_save_tb_callback(callback_dir, tb_log_dir)
+    create_and_save_ckpt_callback(callback_dir, ckpt_dir)
+
+
 
 
 if __name__=='__main__':
