@@ -1,5 +1,7 @@
 from os import read
 from src.utils.all_utils import read_yaml, create_dirs
+from src.utils.models import load_full_model
+from src.utils.callbacks import get_callbacks
 import argparse
 import pandas as pd
 import os
@@ -17,6 +19,15 @@ def train_model(config_path):
 
     artifacts = config['artifacts']
     artifacts_dir = artifacts['ARTIFACTS_DIR']
+
+    untrained_full_modelpath=os.path.join(artifacts_dir,artifacts['BASE_MODEL_DIR'], artifacts['CUSTOM_MODEL_NAME'])
+
+    model = load_full_model(untrained_full_modelpath)
+
+    callback_dir_path = os.path.join(artifacts_dir,artifacts['CALLBACKS_DIR'])
+    callbacks = get_callbacks(callback_dir_path)
+
+
 
 
 if __name__=='__main__':
