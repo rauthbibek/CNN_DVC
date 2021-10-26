@@ -2,6 +2,7 @@ import yaml
 import os
 import json
 import logging
+import time
 
 def read_yaml(path_to_yaml:str) -> dict:
     with open(path_to_yaml) as yaml_file:
@@ -24,5 +25,10 @@ def save_scores(scores, path, indentation=4):
     with open(path, "w") as f:
         json.dump(scores, f, indent=indentation)
     logging.info(f"scores are saved at {path}")
+
+def get_timestamp(name: str):
+    timestamp = time.asctime().replace(" ", "_").replace(":", "_") 
+    unique_name = f"{name}_at_{timestamp}"
+    return unique_name
 
 
