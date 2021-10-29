@@ -1,6 +1,6 @@
 from os import read
 from src.utils.all_utils import read_yaml, create_dirs
-from src.utils.models import load_full_model
+from src.utils.models import load_full_model, get_unique_model_name
 from src.utils.callbacks import get_callbacks
 from src.utils.data_management import train_valid_generator
 import argparse
@@ -37,6 +37,7 @@ def train_model(config_path, param_path):
 
     steps_per_epoch = train_generator.samples // train_generator.batch_size
     validation_steps = validation_generator.samples // validation_generator.batch_size
+    logging.info(f"Model training started")
 
     model.fit(
         train_generator,
@@ -46,6 +47,18 @@ def train_model(config_path, param_path):
         validation_steps=validation_steps,
         callbacks=callbacks
     ) 
+
+    logging.info(f"Model training completed")
+
+    trained_model_dir = os.path.join(artifacts_dir,artifacts['TRAINED_MODEL_DIR'])
+    create_dirs([trained_model_dir])
+
+    model_file_path = os.path.join(trained_model_dir, get_unique_model_name())
+    model.save(model_file_path)
+
+    logging.info(f"Model is saved at {model_file_path}")
+
+
 
 
 

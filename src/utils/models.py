@@ -1,6 +1,6 @@
 import tensorflow as tf
 import logging
-
+from src.utils.all_utils import get_timestamp
 
 #preparing base model
 def get_VGG16_model(input_shape, model_path):
@@ -50,6 +50,13 @@ def load_full_model(untrained_full_modelpath):
     logging.info(f"Untrained model is returned from: {untrained_full_modelpath}")
 
     return model
+
+def get_unique_model_name(model_name='model'):
+    unique_name = get_timestamp(model_name)
+    unique_model_name = f"{unique_name}_.h5"
+
+    return unique_model_name
+
 
 
 
