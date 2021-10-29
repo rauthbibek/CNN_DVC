@@ -35,6 +35,17 @@ def train_model(config_path, param_path):
         do_data_augmentation=params["AUGMENTATION"]
     )
 
+    steps_per_epoch = train_generator.samples // train_generator.batch_size
+    validation_steps = validation_generator.samples // validation_generator.batch_size
+
+    model.fit(
+        train_generator,
+        validation_data=validation_generator,
+        epochs = params["EPOCHS"],
+        steps_per_epoch=steps_per_epoch,
+        validation_steps=validation_steps,
+        callbacks=callbacks
+    ) 
 
 
 
