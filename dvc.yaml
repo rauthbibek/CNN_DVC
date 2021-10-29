@@ -1,6 +1,6 @@
 stages:
   load_data:
-    cmd: python src\stage_01_load_save.py --config=config/config.yaml
+    cmd: python src/stage_01_load_save.py --config=config/config.yaml
     deps: 
       - src/stage_01_load_save.py
       - src/utils/all_utils.py
@@ -8,3 +8,17 @@ stages:
     outs:
       - data/dog
       - data/cat
+  prepare_base_model:
+      cmd: python src/stage_02_prepare_base_model.py --config=config/config.yaml --params=params.yaml
+      deps:
+        - src/stage_02_prepare_base_model.py
+        - src/utils/all_utils.py
+        - src/utils/models.py
+        - config/config.yaml
+      params:
+        - IMAGE_SIZE
+        - LEARNING_RATE
+        - N_CLASS
+      outs:
+        - artifacts/base_model/custom_VGG16_base_model.h5
+        - artifacts/base_model/VGG16_base_model.h5
